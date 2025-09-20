@@ -1,5 +1,5 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { storage } from '../utils/storage';
 import { AuthResponse, User, Wallet } from '../types';
 
 const API_BASE_URL = 'http://localhost:3000'; // Alterar para IP do servidor em produção
@@ -11,7 +11,7 @@ const api = axios.create({
 
 // Interceptor para adicionar token de autenticação
 api.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem('access_token');
+  const token = await storage.getItem('access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -23,8 +23,8 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      await AsyncStorage.removeItem('access_token');
-      await AsyncStorage.removeItem('user');
+      await storage.removeItem('access_token');
+      await storage.removeItem('user');
       // Aqui você pode redirecionar para a tela de login
     }
     return Promise.reject(error);
@@ -48,25 +48,25 @@ export const authService = {
   },
 
   async saveToken(token: string): Promise<void> {
-    await AsyncStorage.setItem('access_token', token);
+    await storage.setItem('access_token', token);
   },
 
   async saveUser(user: User): Promise<void> {
-    await AsyncStorage.setItem('user', JSON.stringify(user));
+    await storage.setItem('user', JSON.stringify(user));
   },
 
   async getStoredUser(): Promise<User | null> {
-    const userStr = await AsyncStorage.getItem('user');
+    const userStr = await storage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
   },
 
   async getStoredToken(): Promise<string | null> {
-    return await AsyncStorage.getItem('access_token');
+    return await storage.getItem('access_token');
   },
 
   async logout(): Promise<void> {
-    await AsyncStorage.removeItem('access_token');
-    await AsyncStorage.removeItem('user');
+    await storage.removeItem('access_token');
+    await storage.removeItem('user');
   },
 };
 
