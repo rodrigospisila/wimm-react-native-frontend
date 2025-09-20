@@ -1,7 +1,6 @@
-
 # Wimm - Frontend React Native
 
-Este é o frontend do aplicativo **Wimm - Where is my money?**, desenvolvido com **React Native** e **Expo**.
+Este é o frontend do aplicativo **Wimm - Where is my money?**, desenvolvido com **React Native**, **Expo** e **Expo Router**.
 
 ## 🚀 Começando
 
@@ -18,8 +17,8 @@ Siga as instruções abaixo para configurar e executar o projeto em seu ambiente
 
 1. **Clone o repositório:**
    ```bash
-   git clone <URL_DO_REPOSITORIO>
-   cd wimm_react_native_frontend
+   git clone https://github.com/rodrigospisila/wimm-react-native-frontend.git
+   cd wimm-react-native-frontend
    ```
 
 2. **Instale as dependências:**
@@ -29,7 +28,7 @@ Siga as instruções abaixo para configurar e executar o projeto em seu ambiente
 
 3. **Configure a URL da API:**
    - Abra o arquivo `src/services/api.ts`.
-   - Atualize a variável `baseURL` para o endereço do seu backend NestJS (ex: `http://localhost:3000`).
+   - Atualize a variável `API_BASE_URL` para o endereço do seu backend NestJS (ex: `http://localhost:3000`).
 
 ### Executando a Aplicação
 
@@ -45,24 +44,81 @@ Siga as instruções abaixo para configurar e executar o projeto em seu ambiente
    - **No navegador (para testes):**
      - Pressione `w` no terminal para abrir a versão web.
 
-## 🛠️ Estrutura do Projeto
+## 🛠️ Estrutura do Projeto (Expo Router)
 
-- `src/`
-  - `assets/`: Imagens e outros arquivos estáticos.
-  - `components/`: Componentes reutilizáveis.
-  - `contexts/`: Contextos da aplicação (ex: `AuthContext`).
-  - `navigation/`: Configuração da navegação (React Navigation).
-  - `screens/`: Telas principais da aplicação (Login, Dashboard, etc.).
-  - `services/`: Serviços de API e outros.
-  - `types/`: Definições de tipos TypeScript.
-- `App.tsx`: Componente principal da aplicação.
+O projeto utiliza **Expo Router** para navegação baseada em arquivos (file-based routing):
+
+```
+app/
+├── _layout.tsx         # Layout principal da aplicação
+├── index.tsx          # Página inicial (redireciona para login)
+├── login.tsx          # Tela de login
+├── register.tsx       # Tela de registro
+└── dashboard.tsx      # Dashboard principal
+
+src/
+├── contexts/          # Contextos da aplicação (AuthContext)
+├── services/          # Serviços de API e comunicação
+├── types/            # Definições de tipos TypeScript
+└── utils/            # Utilitários (storage polyfill)
+```
 
 ## ✨ Funcionalidades
 
-- **Autenticação:** Telas de Login e Registro.
-- **Navegação:** Navegação em pilha (Stack Navigator).
-- **UI:** Componentes visuais com [React Native Paper](https://reactnativepaper.com/).
-- **Gerenciamento de Estado:** Context API para autenticação.
-- **Comunicação com API:** [Axios](https://axios-http.com/) para requisições HTTP.
+### **Navegação Moderna**
+- **Expo Router**: Navegação baseada em arquivos (file-based routing)
+- **Deep Linking**: Suporte nativo a links profundos
+- **TypeScript**: Tipagem automática de rotas
+- **Layouts**: Layouts compartilhados entre telas
 
+### **Interface e UX**
+- **React Native Paper**: Componentes Material Design
+- **Responsive Design**: Adaptável para diferentes tamanhos de tela
+- **Tema Personalizado**: Cores e estilos consistentes
+- **Loading States**: Estados de carregamento em todas as operações
 
+### **Integração com Backend**
+- **Axios**: Cliente HTTP para comunicação com API
+- **Interceptors**: Tratamento automático de autenticação e erros
+- **Storage**: Persistência de dados com polyfill para web
+- **Error Handling**: Tratamento robusto de erros
+
+## 🔧 Tecnologias Utilizadas
+
+- **React Native** - Framework para desenvolvimento mobile
+- **Expo** - Plataforma para desenvolvimento React Native
+- **Expo Router** - Navegação baseada em arquivos
+- **TypeScript** - Tipagem estática
+- **React Native Paper** - Biblioteca de componentes UI
+- **Axios** - Cliente HTTP
+- **@expo/vector-icons** - Ícones vetoriais
+
+## 📱 Compatibilidade
+
+- **iOS**: iPhone e iPad
+- **Android**: Smartphones e tablets
+- **Web**: Navegadores modernos (para desenvolvimento e testes)
+
+## 🚀 Deploy
+
+Para fazer deploy do aplicativo:
+
+1. **Build para produção:**
+   ```bash
+   npx expo build
+   ```
+
+2. **Publicar no Expo:**
+   ```bash
+   npx expo publish
+   ```
+
+3. **Build standalone:**
+   ```bash
+   npx expo build:android
+   npx expo build:ios
+   ```
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
